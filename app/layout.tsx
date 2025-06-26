@@ -2,11 +2,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/components/auth-provider";
 import { AuthenticatedLayout } from "@/components/authenticated-layout";
-import { ThemeProvider } from "@/components/theme-provider";
+import { HRProvider } from "@/contexts/hr-context";
 import { Sidebar } from "@/components/sidebar";
-
+import { Header } from "@/components/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,14 +22,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <AuthProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Sidebar />
-            <div className="flex h-screen bg-background">
+            <HRProvider>
+              <div className="flex h-screen bg-background">
                 <Sidebar />
                 <div className="flex-1 flex flex-col overflow-hidden">
                   <Header />
                   <main className="flex-1 overflow-auto p-6">{children}</main>
                 </div>
               </div>
+            </HRProvider>
           </ThemeProvider>
         </AuthProvider>
       </body>
