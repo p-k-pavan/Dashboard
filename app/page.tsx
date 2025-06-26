@@ -1,7 +1,7 @@
 "use client"
 
 import { EmployeeCard } from "@/components/employee-card"
-
+import { useFilteredEmployees } from "@/hooks/use-filtered-employees"
 import { useHR } from "@/contexts/hr-context"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Users, Bookmark, TrendingUp, Award } from "lucide-react"
@@ -9,9 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export default function Dashboard() {
   const { state } = useHR()
-  const filteredEmployees = state.employees
-  const totalEmployees = state.employees.length
-  const filteredCount = filteredEmployees.length
+  const { filteredEmployees, totalEmployees, filteredCount } = useFilteredEmployees()
 
   if (state.loading) {
     return (
