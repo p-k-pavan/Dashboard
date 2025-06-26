@@ -129,6 +129,9 @@ export function HRProvider({ children }: { children: React.ReactNode }) {
       const enhancedEmployees: Employee[] = data.users.map((user: any) => ({
         ...user,
         rating: Math.round((Math.random() * 4 + 1) * 10) / 10,
+        projects: generateProjects(),
+        feedback: generateFeedback(),
+        performanceHistory: generatePerformanceHistory(),
       }))
 
       dispatch({ type: "SET_EMPLOYEES", payload: enhancedEmployees })
@@ -158,7 +161,46 @@ export function useHR() {
   return context
 }
 
+function generateProjects(): string[] {
+  const projects = [
+    "Website Redesign",
+    "Mobile App Development",
+    "Database Migration",
+    "API Integration",
+    "Security Audit",
+    "Performance Optimization",
+    "User Experience Research",
+    "Marketing Campaign",
+    "Training Program",
+  ]
+  return projects.slice(0, Math.floor(Math.random() * 4) + 1)
+}
 
+function generateFeedback() {
+  const authors = ["John Manager", "Sarah Lead", "Mike Director", "Lisa VP"]
+  const comments = [
+    "Excellent work on the recent project. Shows great leadership skills.",
+    "Consistently delivers high-quality work and meets deadlines.",
+    "Great team player and always willing to help colleagues.",
+    "Shows initiative and brings creative solutions to problems.",
+    "Strong technical skills and attention to detail.",
+  ]
 
+  return Array.from({ length: Math.floor(Math.random() * 3) + 1 }, (_, i) => ({
+    id: `feedback-${i}`,
+    author: authors[Math.floor(Math.random() * authors.length)],
+    comment: comments[Math.floor(Math.random() * comments.length)],
+    date: new Date(Date.now() - Math.random() * 90 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+    rating: Math.floor(Math.random() * 2) + 4,
+  }))
+}
 
-
+function generatePerformanceHistory() {
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
+  return months.map((month) => ({
+    month,
+    rating: Math.round((Math.random() * 2 + 3) * 10) / 10,
+    goals: Math.floor(Math.random() * 5) + 3,
+    completed: Math.floor(Math.random() * 5) + 2,
+  }))
+}
