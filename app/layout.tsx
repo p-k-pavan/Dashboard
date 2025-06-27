@@ -7,6 +7,7 @@ import { AuthProvider } from "@/components/auth-provider";
 import { HRProvider } from "@/contexts/hr-context";
 import { Sidebar } from "@/components/sidebar";
 import { Header } from "@/components/header";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,15 +22,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <AuthProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <HRProvider>
-              <div className="flex h-screen bg-background">
-                <Sidebar />
-                <div className="flex-1 flex flex-col overflow-hidden">
-                  <Header />
-                  <main className="flex-1 overflow-auto p-6">{children}</main>
+             
+              <HRProvider>
+                <div className="flex h-screen bg-background">
+                  <Sidebar />
+                  <div className="flex-1 flex flex-col overflow-hidden">
+                    <Header />
+                    <main className="flex-1 overflow-auto p-6">{children}</main>
+                   <Toaster />
+                  </div>
                 </div>
-              </div>
-            </HRProvider>
+              </HRProvider>
+            
           </ThemeProvider>
         </AuthProvider>
       </body>

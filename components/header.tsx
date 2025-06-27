@@ -19,6 +19,7 @@ import { useFilteredEmployees } from "@/hooks/use-filtered-employees"
 import { signIn, signOut, useSession } from "next-auth/react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 export function Header() {
   const { theme, setTheme } = useTheme()
@@ -100,7 +101,17 @@ export function Header() {
         </div>
 
         <div className="flex items-center space-x-2">
-          <Button variant="ghost" size="icon" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => {
+              const nextTheme = theme === "dark" ? "light" : "dark"
+              setTheme(nextTheme)
+              toast("Theme Changed", {
+                description: `Switched to ${nextTheme} mode.`,
+              })
+            }}
+          >
             <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           </Button>
@@ -134,7 +145,13 @@ export function Header() {
                     <User className="mr-2 h-4 w-4" />
                     Profile
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/auth" })}>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      toast("Logged out", {
+                        description: "You have been signed out successfully.",
+                      })
+                      signOut({ callbackUrl: "/auth" })
+                    }} >
                     <LogOut className="mr-2 h-4 w-4" />
                     Logout
                   </DropdownMenuItem>

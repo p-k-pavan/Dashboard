@@ -8,6 +8,8 @@ import { Star, Bookmark, Eye, TrendingUp, BookmarkCheck } from "lucide-react"
 import type { Employee } from "@/contexts/hr-context"
 import { useHR } from "@/contexts/hr-context"
 import Link from "next/link"
+import { toast } from "sonner"
+
 
 interface EmployeeCardProps {
   employee: Employee
@@ -15,14 +17,31 @@ interface EmployeeCardProps {
 
 export function EmployeeCard({ employee }: EmployeeCardProps) {
   const { state, dispatch } = useHR()
+  // const { toast } = useToast()
   const isBookmarked = state.bookmarkedIds.includes(employee.id)
 
   const handleBookmark = () => {
     dispatch({ type: "TOGGLE_BOOKMARK", payload: employee.id })
+    toast(isBookmarked ? "Removed from Bookmarks" : "Bookmarked", {
+      description: `${employee.firstName} ${employee.lastName} ${isBookmarked ? "has been removed" : "has been added"
+        } to bookmarks.`,
+      action: {
+        label: "Undo",
+        onClick: () => console.log("Undo"),
+      },
+    })
+
   }
 
   const handlePromote = () => {
     dispatch({ type: "PROMOTE_EMPLOYEE", payload: employee.id })
+    toast("Promotion Success", {
+      description: `${employee.firstName} ${employee.lastName} has been promoted.`,
+      action: {
+        label: "Undo",
+        onClick: () => console.log("Undo"),
+      },
+    })
   }
 
   const renderStars = (rating: number) => {

@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, Github, Mail } from "lucide-react";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -19,27 +20,37 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError("");
+    e.preventDefault()
+    setIsLoading(true)
+    setError("")
 
     try {
       const result = await signIn("credentials", {
         email,
         password,
         callbackUrl: "/", // ✅ Let NextAuth handle redirection
-      });
+      })
 
-      // NOTE: result.ok will be false if credentials are invalid
       if (result?.error) {
-        setError("Invalid credentials. Please try again.");
-        setIsLoading(false);
+        setError("Invalid credentials. Please try again.")
+        toast("Login Failed", {
+          description: "Invalid credentials. Please try again.",
+        })
+        setIsLoading(false)
+      } else {
+        toast("Login Successful", {
+          description: `Welcome back!`,
+        })
       }
     } catch (err) {
-      setError("An error occurred. Please try again.");
-      setIsLoading(false);
+      setError("An error occurred. Please try again.")
+      toast("Error", {
+        description: "An unexpected error occurred. Please try again.",
+      })
+      setIsLoading(false)
     }
-  };
+  }
+
 
   const handleGoogleSignIn = () =>
     signIn("google", { callbackUrl: "/" });

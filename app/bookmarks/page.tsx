@@ -5,16 +5,20 @@ import { EmployeeCard } from "@/components/employee-card"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Bookmark, Users } from "lucide-react"
+import { toast } from "sonner"
 
 export default function BookmarksPage() {
   const { state, dispatch } = useHR()
   const bookmarkedEmployees = state.employees.filter((emp) => state.bookmarkedIds.includes(emp.id))
 
   const clearAllBookmarks = () => {
-    state.bookmarkedIds.forEach((id) => {
-      dispatch({ type: "TOGGLE_BOOKMARK", payload: id })
-    })
-  }
+  state.bookmarkedIds.forEach((id) => {
+    dispatch({ type: "TOGGLE_BOOKMARK", payload: id })
+  })
+  toast("Bookmarks Cleared", {
+    description: "All bookmarked employees have been removed.",
+  })
+}
 
   return (
     <div className="space-y-6">
