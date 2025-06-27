@@ -3,6 +3,15 @@
 A modern, responsive user management dashboard built with Next.js, React, and Tailwind CSS. This application fetches user data from an external API and provides an intuitive interface for managing team members with features like bookmarking, promotions, and performance tracking.
 ![Demo Screenshot](./public/dashboard.png)
 
+## 🧪 Test Login (Trial Access)
+
+### You can log in using the following test credentials to explore the dashboard without setting up authentication:
+
+```bash
+Email:    user@example.com  
+Password: password123
+```
+
 ## 🚀 Features Implemented
 
 ### Core Features
@@ -198,14 +207,6 @@ npm run lint         # Run ESLint
 npm run type-check   # Run TypeScript checks
 ```
 
-## 🧪 Test Login (Trial Access)
-
-### You can log in using the following test credentials to explore the dashboard without setting up authentication:
-
-```bash
-Email:    user@example.com  
-Password: password123
-```
 ### This mock user account is configured for demo and trial purposes only. Authentication is handled using NextAuth.js with a credentials provider.
 
 # 🖼️ Feature Previews
